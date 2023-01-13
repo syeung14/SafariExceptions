@@ -80,7 +80,7 @@ public class Either<S, F> {
     return this;
   }
 
-//  public Either<S, F> mapIfFailure(UnaryOperator<Either<S, F>> op) {
+  //  public Either<S, F> mapIfFailure(UnaryOperator<Either<S, F>> op) {
   public Either<S, F> recover(UnaryOperator<Either<S, F>> op) {
     if (isFailure()) {
       return op.apply(this);
@@ -101,7 +101,7 @@ public class Either<S, F> {
   }
 
   public static <S, F> UnaryOperator<Either<S, F>> retrySequence(
-      UnaryOperator<Either<S, F>> ... op) {
+      UnaryOperator<Either<S, F>>... op) {
     return e -> {
       int idx = 0;
       while (e.isFailure() && idx < op.length) {
@@ -133,23 +133,36 @@ class UseEither {
       Either<Stream<String>, Throwable> e) {
 // now suitable only for "mapIfFailure" or whatever I rename it to
 //    if (e.isFailure()) {
-      String failedName = e.getFailure().getMessage();
-      String backupName = backup.get(failedName);
-      System.out.println(Colors.PURPLE
-          + "recovering from missing: " + failedName
-          + " with " + backupName + Colors.RESET);
-      e = ExFunction.wrap((String f) -> Files.lines(Path.of(f)))
-          .apply(backupName);
+    String failedName = e.getFailure().getMessage();
+    String backupName = backup.get(failedName);
+    System.out.println(Colors.PURPLE
+        + "recovering from missing: " + failedName
+        + " with " + backupName + Colors.RESET);
+    e = ExFunction.wrap((String f) -> Files.lines(Path.of(f)))
+        .apply(backupName);
 //    }
     return e;
   }
 
-  private static Either<Stream<String>, Throwable> pause(
-      Either<Stream<String>, Throwable> e) {
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException ie) {} // ignore, not really ideal!
-    return e;
+//  private static Either<Stream<String>, Throwable> pause(
+//      Either<Stream<String>, Throwable> e) {
+//    try {
+//      Thread.sleep(3000);
+//    } catch (InterruptedException ie) {} // ignore, not really ideal!
+//    return e;
+//  }
+
+  private static UnaryOperator<Either<Stream<String>, Throwable>> pause(
+      int delay) {
+    return e -> {
+      try {
+        System.out.println(Colors.PURPLE + "pausing for: "
+            + delay + " millis" + Colors.RESET);
+        Thread.sleep(delay);
+      } catch (InterruptedException ie) {
+      } // ignore, not really ideal!
+      return e;
+    };
   }
 
   public static void main(String[] args) {
@@ -165,10 +178,11 @@ class UseEither {
 //        .map(e -> e.recover(UseEither::retry))
 
         .map(Either.retrySequence(
-            UseEither::pause,
+            UseEither.pause(2_000),
             UseEither::retry,
+            UseEither.pause(3_000),
             Either.retries(UseEither::tryBackup, 3)
-            ))
+        ))
 
         .filter(Either::isSuccess)
         .flatMap(Either::get)

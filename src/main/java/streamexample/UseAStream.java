@@ -5,6 +5,7 @@ import ansi.Colors;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.SQLOutput;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -50,26 +51,37 @@ public class UseAStream {
 //    }
 //  }
 
+
   public static void main(String[] args) {
-    Stream.of("a.txt", "b.txt", "c.txt")
-        // one input filename -> many String lines
-//        .flatMap(UseAStream::getFileContents) // works when result is Stream.
-//        .map(UseAStream::getFileContents)
+    Stream.of("a.txt", "e.txt", "c.txt")
+          // one input filename -> many String lines
+          //        .flatMap(UseAStream::getFileContents) // works when result is Stream.
+          //        .map(UseAStream::getFileContents)
 
-        .map(ExFunction.wrap(fn -> Files.lines(Path.of(fn))))
-        // do something with "missing"
-        .flatMap(item -> Stream.of(
-            item,
-            Optional.of(Stream.of("-----------------"))
-        ))
-        .peek(opt -> {
-          if (opt.isEmpty()) {
-            System.out.println(Colors.CYAN + "File was missing!" + Colors.RESET);
-          }
-        })
+          .map(ExFunction.wrap(fn -> Files.lines(Path.of(fn))))
+          // do something with "missing"
+          .flatMap(item -> Stream.of(
+              item,
+              Optional.of(Stream.of("-----------------"))
+          ))
+          .peek(opt -> {
+            if (opt.isEmpty()) {
+              System.out.println(Colors.CYAN + "File was missing!" + Colors.RESET);
+            }
+          })
 
-        .filter(Optional::isPresent)
-        .flatMap(opt -> opt.get())
-        .forEach(System.out::println);
+          .filter(Optional::isPresent)
+          .flatMap(opt -> opt.get())
+          .forEach(System.out::println);
   }
+
+  public static Optional<Stream<String>> gtFileContents(String fn) {
+    try {
+      return Optional.of(Files.lines(Path.of(fn)));
+    } catch (IOException e) {
+      System.out.println(Colors.RED + "File not found: " + e.getMessage());
+      return Optional.empty();
+    }
+  }
+
 }

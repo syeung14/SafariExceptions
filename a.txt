@@ -1,2 +1,2 @@
-This is file a.txt
-it has two lines
+This is a file, it's called
+a.txt and it has two lines

@@ -1,0 +1,64 @@
+Resources
+---------
+
+Upcoming classes on O'Reilly:
+ - https://dancingcloudservices.com/index.php/classes/
+January 18, Go the right way
+February 12, Java Generics
+February 14, Getting started with Java
+
+Sign up for Heinz Kabutz's monthly "favorite courses on O'Reilly" email: https://javaspecialists.eu/courses/oreilly/
+(You might want to join his "Java Specialists" email newsletter too!)
+
+My YouTube Channel, dedicated to programming topics:
+ - https://www.youtube.com/@DancingCloudServices
+
+-------------------------------------------
+
+Pre-recorded Java videos:
+
+Java 17 Certification Study Guide:
+ - https://learning.oreilly.com/videos/java-se-17/9780138194796/
+
+Java 11 Certification Study Guide:
+ - https://learning.oreilly.com/videos/java-se-11/9780137586875/
+
+OCA Java 8 (more detailed on basics, and all relevant for 11 & 17!)
+ - https://learning.oreilly.com/videos/oca-java-se/9780134427201
+
+Functional programming with Java:
+   https://learning.oreilly.com/videos/functional-programming-for/9780134778235
+
+Java Collections:
+   https://learning.oreilly.com/videos/modern-java-collections/9780134663524
+
+Java Programming Essentials:
+   https://learning.oreilly.com/videos/java-programming-essentials/9780137475438/
+
+Core Java Data Types:
+   https://learning.oreilly.com/videos/core-java-data/9780137368624/
+
+Running with the Java Platform Module System
+   https://learning.oreilly.com/videos/up-and-running/9780137475216/
+
+-------------------------------------------
+
+Oracle Java Magazine
+ - https://blogs.oracle.com/javamagazine/
+
+Java Ranch / Code Ranch
+ - JavaRanch.com / coderanch.com
+ - Forum site that's actually helpful to learners
+
+Java tutorial (Java 8 only, sadly, but excellent for helping understand
+   core material up to and including lambdas and streams.)
+ - https://docs.oracle.com/javase/tutorial/
+
+-------------------------------------------
+
+Contact me directly at simon@dancingcloudservices.com if your
+organization might be interested in customized training or course
+development. I work in Java, Scala, JavaScript, Python, Go, and
+address OO design, functional design, and software architecture
+topics, and am happy to deliver training either onsite or web-based,
+or to build courses and training material in video or other formats.
